@@ -74,9 +74,9 @@ const Deshboard = () => {
         </NavLink></li>
      
          <li className=' text-white bg-gray-500 mt-2 '>
-     <NavLink to="users" className="flex items-center  active:bg-primary ">
+     <NavLink to="manageData" className="flex items-center  active:bg-primary ">
       <AiOutlineUsergroupAdd/>
-      <span className="text-sm  ml-2">Users <span className='bg-primary rounded p-2 text-white font-bold text-end'>45</span></span>
+      <span className="text-sm  ml-2">User Data <span className='bg-primary rounded p-2 text-white font-bold text-end'>45</span></span>
         </NavLink></li>
         <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="contact" className="flex items-center  active:bg-primary text-white">

@@ -20,6 +20,7 @@ import UpdateBlog from './Components/Deshboard/Blog/UpdateBlog';
 import Registration from './Components/Authentication/Registration';
 import RequireAuth from './Components/Authentication/RequireAuth';
 import ForgetPassword from './Components/Authentication/ForgetPassword';
+import ManageData from './Components/Deshboard/userSpacificData/ManageData';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
     <Route path='/updatecatagory/:id'  element={<UpdateCategory/>}/>
     <Route path='/updateblog/:id'  element={<UpdateBlog/>}/>
       <Route path='/deshboard' element={<RequireAuth><Deshboard/></RequireAuth>}>
+    <Route path='manageData'  element={<RequireAuth><ManageData/></RequireAuth>}/>
     <Route index  element={<BasicInfo/>}/>
     <Route path='addvlog'  element={<AddVlog/>}/>
     

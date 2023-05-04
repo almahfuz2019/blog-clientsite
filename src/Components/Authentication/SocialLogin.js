@@ -4,13 +4,16 @@ import Loading from "../Shired/Loading"
 import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { useEffect } from 'react';
+import UseToken from '../Hooks/UseToken';
 const SocialLogin = () => {
   const [signInWithGoogle, user, loading] = useSignInWithGoogle(auth);
   const navigate=useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
+  // console.log(user?.user?.email)
+  const[token]=UseToken(user?.user);
   useEffect(()=>{
-    if(user){
+    if(token){
       console.log(user);
       navigate(from, { replace: true });
     }

@@ -5,24 +5,27 @@ import SocialLogin from './SocialLogin';
 import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
+import UseToken from '../Hooks/UseToken';
 const Registration = () => {
   const [agree,setAgree]=useState(false);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [
-     createUserWithEmailAndPassword,
-     user,
-     loading,
-     error,
-   ] = useCreateUserWithEmailAndPassword(auth);
-   if(user){
-     console.log(user);
-   }
-   const navigate=useNavigate();
-   const onSubmit=async(data)=>{console.log(data)
-     createUserWithEmailAndPassword(data.email,data.password);
-     await updateProfile({ displayName:data.name});
+      createUserWithEmailAndPassword,
+      user,
+      loading,
+      error,
+    ] = useCreateUserWithEmailAndPassword(auth);
+    const[token]=UseToken(user);
+    const navigate=useNavigate();
+   if(token){
+     console.log(token);
      navigate("/");
+   }
+   const onSubmit=async(data)=>{console.log(data)
+     await createUserWithEmailAndPassword(data.email,data.password);
+     await updateProfile({ displayName:data.name});
+   
      };
    if(loading || updating){
      return <Loading/>

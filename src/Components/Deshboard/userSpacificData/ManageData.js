@@ -1,61 +1,52 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import Loading from '../../Shired/Loading';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase.init';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-const ManageBlogs = () => {
-     const [keywords,setKeywords]=useState("")
-       const[blogs,setBlogs]=useState([]);
-    const [productsCount,setProductsCount]=useState([]);
-    useEffect(()=>{
-      fetch("https://chaayasurgical.onrender.com/allproductscount")
-      .then(res=>res.json())
-      .then(data=>setProductsCount(data))
-  },[blogs])
-  const handleSearch = (e) => {
-    setKeywords(e.target.value);
-  };
-  // delete products 
+const ManageData = () => {
+ 
+     const [userData,setUserData]=useState([]);
+     useEffect(()=>{
+          detailsOfBlog();
+                },[userData]);
+
+     const [user, loading, error] = useAuthState(auth);
+     const authorEmail=user?.email;
+      // delete products 
   const handleProductDelete=async(id)=>{
-    const proceed=window.confirm("are you sure you want to delete?");
-    if(proceed){
-    await axios.delete(`http://localhost:5000/deleteblog/${id}`)
-     .then(response=>{
-          if(response.data.deletedCount>0){
-               const deletedremaining=blogs.filter(x=>x._id !==id);
-               setBlogs(deletedremaining)
-          }
-     })
-}
-}
-  //get allproducts 
-      const fetchProducts = () => {
-         fetch(`http://localhost:5000/readblogs`)
-         .then(res=>res.json())
-         .then(data=>setBlogs(data))
-       }
-  useEffect(()=>{
-    fetchProducts()
-  },[])
-  useEffect(()=>{
-    const url=`https://chaayasurgical.onrender.com/productsearch?keywords=${keywords}`;
-    if(keywords!==""){
-      fetch(url)
-      .then(res=>res.json())
-      .then(data=>{
-        setBlogs(data)
-       
+     const proceed=window.confirm("are you sure you want to delete?");
+     if(proceed){
+     await axios.delete(`http://localhost:5000/deleteblog/${id}`)
+      .then(response=>{
+           if(response.data.deletedCount>0){
+                const deletedremaining=userData.filter(x=>x._id !==id);
+                setUserData(deletedremaining)
+           }
       })
-    }else if(keywords===""){
-      fetchProducts()
-    }
-  },[keywords])
+ }
+ }
+     if(loading){
+       return <Loading/>
+     }
+     const detailsOfBlog = async() => {
+          try{
+              const response=await axios.get(`http://localhost:5000/readblogswithemail/${authorEmail}`)
+              setUserData(response.data)
+          }catch(error){
+              console.log("something is wrong.Please try again")
+          }
+                }
+             
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {productsCount.count}</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: 34</span></div>
         
      <div className='mx-auto text-center mb-5'>
-     <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" onChange={handleSearch}/>
+     <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" />
      </div>
           <table className="table w-full">
             {/* <!-- head --> */}
@@ -69,7 +60,7 @@ const ManageBlogs = () => {
                 <th>Action</th>
               </tr>
             </thead>
-         {blogs.map((blog,index)=>
+         {userData.map((blog,index)=>
             <tbody key={blog._id}>
               <tr className='border bg-white'>
                 <th>{index+1}</th>
@@ -109,4 +100,4 @@ const ManageBlogs = () => {
                </div>
      );
 };
-export default ManageBlogs;
+export default ManageData;

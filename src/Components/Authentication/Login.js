@@ -7,6 +7,7 @@ import auth from '../../firebase.init';
 import Loading from '../Shired/Loading';
 import { getAuth } from 'firebase/auth';
 import { useEffect } from 'react';
+import UseToken from '../Hooks/UseToken';
 const Login = () => {
   const auth = getAuth();
   const [
@@ -15,12 +16,13 @@ const Login = () => {
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
+  const[token]=UseToken(user);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const navigate=useNavigate();
    let location = useLocation();
    let from = location.state?.from?.pathname || "/";
    useEffect(()=>{
-     if(user){
+     if(token){
        navigate(from, { replace: true });
       }
    },[user,from,navigate])

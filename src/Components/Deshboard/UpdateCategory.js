@@ -19,7 +19,6 @@ const handleCatagoryNameChange = e => {
  const handleUpdateCatagory = async(e) => {
   e.preventDefault();
      const url = `http://localhost:5000/updatecategory/${id}`;
-     console.log(url);
      await axios.put(url,category)
           toast.success('Update Successfully', {
             position: "top-right",
