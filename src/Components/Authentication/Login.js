@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate} from 'react-router-dom';
+import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import SocialLogin from './SocialLogin';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init';
 import Loading from '../Shired/Loading';
 import { getAuth } from 'firebase/auth';
 import { useEffect } from 'react';
 import UseToken from '../Hooks/UseToken';
 const Login = () => {
+  
   const auth = getAuth();
   const [
     signInWithEmailAndPassword,
@@ -16,7 +17,7 @@ const Login = () => {
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
-  const[token]=UseToken(user);
+  const[token]=UseToken(user?.user);
   const { register, formState: { errors }, handleSubmit } = useForm();
   const navigate=useNavigate();
    let location = useLocation();
@@ -25,7 +26,7 @@ const Login = () => {
      if(token){
        navigate(from, { replace: true });
       }
-   },[user,from,navigate])
+   },[user])
    if(loading){
      return <Loading/>
    }

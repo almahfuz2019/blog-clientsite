@@ -5,6 +5,9 @@ const UseToken = (user) => {
      useEffect(()=>{
           const email=user?.email;
           const currentUser={email:email};
+          console.log(
+               "user inside in tokend",user
+          );
           console.log(token);
           if(email){
                // console.log(currentUser);
@@ -19,7 +22,6 @@ const UseToken = (user) => {
                        });
           } 
                },[user]);
-
      
      return [token];
 };

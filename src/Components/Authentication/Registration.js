@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import SocialLogin from './SocialLogin';
 import auth from '../../firebase.init';
@@ -16,16 +16,17 @@ const Registration = () => {
       loading,
       error,
     ] = useCreateUserWithEmailAndPassword(auth);
-    const[token]=UseToken(user);
-    const navigate=useNavigate();
+    const[token]=UseToken(user?.user);
+    const navigate =useNavigate();
+    let location = useLocation();
+    let from = location.state?.from?.pathname || "/";
    if(token){
      console.log(token);
-     navigate("/");
+     navigate(from, { replace: true });
    }
    const onSubmit=async(data)=>{console.log(data)
      await createUserWithEmailAndPassword(data.email,data.password);
      await updateProfile({ displayName:data.name});
-   
      };
    if(loading || updating){
      return <Loading/>
