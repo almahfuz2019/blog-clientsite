@@ -38,7 +38,7 @@ const ManageData = () => {
                   'authorization': `Bearer ${localStorage.getItem("accessToken")}`
                 }
               })
-              console.log("res",response);
+              // console.log("res",response);
               setUserData(response.data)
           }catch(error){
               console.log("something is wrong.Please try again")

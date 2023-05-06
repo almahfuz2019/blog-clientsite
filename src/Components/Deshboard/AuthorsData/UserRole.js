@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 const UserRole = () => {
     
-     const[role,setRole]=useState("");
+     const[role,setRole]=useState("Admin");
      console.log(role);
      const { id } = useParams();
      const handleNameChange = e => {
@@ -54,12 +54,9 @@ const UserRole = () => {
      title-font font-semibold">Add a product</h2>
       <div className="relative mb-4">
       <label for="name" className="leading-7 text-sm text-gray-600">Name</label>
-        <select className='select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded'  onChange={handleNameChange}>
-          <option selected>Wating</option>
-          <option>Confirm</option>
-          <option>Cencel</option>
-          <option>Shipment</option>
-          <option>Done</option>
+        <select className='select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded' defaultValue={"Admin"}  onChange={handleNameChange}>
+          <option value="Admin">Admin</option>
+          <option value="Author">Author</option>
         </select>
       </div>
       <input className="text-white bg-primary border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg" value="save" type="submit"/>

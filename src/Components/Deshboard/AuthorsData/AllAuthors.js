@@ -8,7 +8,7 @@ const AllAuthors = () => {
      const [authors,setAuthors]=useState([]);
      useEffect(()=>{
           detailsOfBlog();
-     },[authors]);
+     },[]);
 
 
      const detailsOfBlog = async() => {
@@ -18,7 +18,7 @@ const AllAuthors = () => {
                   'authorization': `Bearer ${localStorage.getItem("accessToken")}`
                 }
               })
-              console.log("res",response);
+              // console.log("res",response);
               setAuthors(response.data)
           }catch(error){
               console.log("something is wrong.Please try again")

@@ -8,7 +8,7 @@ const UseToken = (user) => {
   useEffect(() => {
     const email = user?.email;
     const currentUser = { email: email };
-    // console.log(token);
+    console.log(token);
     if (email) {
       axios
         .post("http://localhost:5000/users", currentUser)
