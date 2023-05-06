@@ -6,7 +6,7 @@ import Loading from '../Shired/Loading';
 const RequireAuth = ({children}) => {
      const location=useLocation();
      const [user, loading, error] = useAuthState(auth);
-     if(!user){
+     if(!loading && !user){
           return <Navigate to="/login" state={{ from: location }} replace/>
      }
      if(loading){

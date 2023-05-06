@@ -4,7 +4,15 @@ import { BsInfoSquare } from "react-icons/bs";
 import { CiShoppingBasket } from "react-icons/ci";
 import {  TbShoppingCartDiscount } from "react-icons/tb";
 import { FaAlignLeft } from 'react-icons/fa';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import UseToken from '../Hooks/UseToken';
 const Deshboard = () => {
+  const [user] = useAuthState(auth);
+  const [token, authUser] = UseToken(user);
+
+  console.log({token, authUser});
+
      return (
      <>
      <div className="drawer drawer-start drawer-mobile ">
@@ -68,7 +76,7 @@ const Deshboard = () => {
       <span className="text-sm  ml-2">Categorys <span className='bg-primary rounded p-2 text-white font-bold text-end'>78</span></span>
         </NavLink></li>
         <li className=' text-white bg-gray-500 mt-2 '>
-        <NavLink to="orders" className="flex items-center  active:bg-primary ">
+        <NavLink to="authors" className="flex items-center  active:bg-primary ">
       <CiShoppingBasket/>
       <span className="text-sm  ml-2">Authors <span className='bg-primary rounded p-2 text-white font-bold text-end'>56</span></span>
         </NavLink></li>

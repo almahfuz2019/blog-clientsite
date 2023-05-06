@@ -11,7 +11,7 @@ const ManageData = () => {
      const [userData,setUserData]=useState([]);
      useEffect(()=>{
           detailsOfBlog();
-                },[userData]);
+     },[userData]);
 
      const [user, loading, error] = useAuthState(auth);
      const authorEmail=user?.email;
@@ -33,7 +33,12 @@ const ManageData = () => {
      }
      const detailsOfBlog = async() => {
           try{
-              const response=await axios.get(`http://localhost:5000/readblogswithemail/${authorEmail}`)
+              const response=await axios.get(`http://localhost:5000/readblogswithemail/${authorEmail}`, {
+                headers: {
+                  'authorization': `Bearer ${localStorage.getItem("accessToken")}`
+                }
+              })
+              console.log("res",response);
               setUserData(response.data)
           }catch(error){
               console.log("something is wrong.Please try again")

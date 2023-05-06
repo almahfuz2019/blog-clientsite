@@ -15,6 +15,7 @@ const NavbarForLargeScreen = () => {
   }
   const logout = () => {
     signOut(auth);
+    localStorage.removeItem("accessToken");
   };
   let navitems=<>
   <li><NavLink to="/">Home</NavLink></li>

@@ -21,6 +21,8 @@ import Registration from './Components/Authentication/Registration';
 import RequireAuth from './Components/Authentication/RequireAuth';
 import ForgetPassword from './Components/Authentication/ForgetPassword';
 import ManageData from './Components/Deshboard/userSpacificData/ManageData';
+import AllAuthors from './Components/Deshboard/AuthorsData/AllAuthors';
+import UserRole from './Components/Deshboard/AuthorsData/UserRole';
 
 function App() {
   return (
@@ -40,8 +42,10 @@ function App() {
       {/* deshboard nested router  */}
     <Route path='/updatecatagory/:id'  element={<UpdateCategory/>}/>
     <Route path='/updateblog/:id'  element={<UpdateBlog/>}/>
+    <Route path='/updaterole/:id'  element={<UserRole/>}/>
       <Route path='/deshboard' element={<RequireAuth><Deshboard/></RequireAuth>}>
     <Route path='manageData'  element={<RequireAuth><ManageData/></RequireAuth>}/>
+    <Route path='authors'  element={<RequireAuth><AllAuthors/></RequireAuth>}/>
     <Route index  element={<BasicInfo/>}/>
     <Route path='addvlog'  element={<AddVlog/>}/>
     

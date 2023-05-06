@@ -26,7 +26,7 @@ const Login = () => {
      if(token){
        navigate(from, { replace: true });
       }
-   },[user])
+   },[navigate,from,token])
    if(loading){
      return <Loading/>
    }
@@ -36,7 +36,6 @@ const Login = () => {
    }
   const onSubmit=data=>{console.log(data)
 signInWithEmailAndPassword(data.email,data.password);
-
 };
      return (
 <div className=" py-10 bg-white">
