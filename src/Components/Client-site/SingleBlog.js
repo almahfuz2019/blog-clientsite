@@ -2,20 +2,52 @@ import {BiRightArrowAlt} from "react-icons/bi";
 import { Link } from 'react-router-dom';
 import UseAllBlogs from '../Hooks/UseAllBlogs';
 import { useEffect } from "react";
-import ReactQuill from "react-quill";
+import Loading from "../Shired/Loading";
+import { useState } from "react";
+import axios from "axios";
 const SingleBlog = () => {
-    const {allBlogs,blog}=UseAllBlogs();
+  const[products,setProducts]=useState([]);
+  const[productLoading,setProductLoading]=useState(true);
+  const[page,setPage]=useState(1);
+  const [error,setError]=useState("");
+  const[size,setSize]=useState(4);
+  const[pageCount,setPageCount]=useState(0);
+  const fetchProducts = async() => {
+    try{
+    //   setProductLoading(true);
+      const url=`http://localhost:5000/data?page=${page}&limit=${size}`;
+    //   console.log(url);
+      const response=await axios.get(url);
+      setPageCount(Math.ceil(response.data.count/size));
+          setProducts(response.data);
+         //  setProductLoading(false);
+    }
+    catch(error){
+      setError("something is wrong.Please try again")
+    };
+  }
+  useEffect(()=>{
+      fetchProducts()
+    },[size,page])
+//  
+  const loadMore=()=>{
+    setSize(size+4)
+  }
     const parseHtml = (html) => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       return doc.body.textContent || '';
     };
   useEffect(()=>{
-    
-    allBlogs();
-  },[])
+    setProductLoading(true)
+    fetchProducts();
+    setProductLoading(false)
+  },[size,page])
+  if(productLoading){
+    return <Loading/>
+  }
      return (
           <>
-            {blog.map(singleBlog=>
+            {products.map(singleBlog=>
                 
                 <div className=" w-full bg-base-200 shadow" key={singleBlog._id}>
   <img className='rounded-none' src={singleBlog.image} alt="Shoes" />
@@ -32,7 +64,14 @@ const SingleBlog = () => {
   </div>
 </div>
                )}
-             
+   {
+   size===products.length===0?"":<div className='mx-auto text-center mt-5'>
+  <button className='btn btn-primary w-64 btn-sm sm:btn-md' onClick={loadMore}>load more</button> 
+  </div>
+}
+{
+    products.length === 0 && <h1 className='text-3xl text-center justify-center mx-auto text-red-700 font-bold h-screen'>Not found</h1>
+  }
           </>
      );
 };

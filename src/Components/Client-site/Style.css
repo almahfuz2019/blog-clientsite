@@ -1,0 +1,27 @@
+.blogdetails h1{
+     font-size: 2rem !important;
+}
+.blogdetails h2{
+      font-size: 2rem !important;
+}
+.blogdetails h3{
+      font-size: 2rem !important;
+}
+.blogdetails h4{
+      font-size: 2rem !important;
+}
+.blogdetails h5{
+      font-size: 2rem !important;
+}
+.blogdetails h6{
+      font-size: 2rem !important;
+}
+.blogdetails u{
+      color: #1e40af;
+}
+.blogdetails li{
+     list-style-type: square;
+}
+.blogdetails ol{
+     list-style-type: square;
+}

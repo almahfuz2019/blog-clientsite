@@ -8,6 +8,10 @@ const BlogLoadByCategory = () => {
      console.log(category);
      const [blog,setBlog]=useState([]);
      const [error,setError]=useState("");
+     const parseHtml = (html) => {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      return doc.body.textContent || '';
+    };
      const allBlogs=async()=>{
       try {
         const url=`http://localhost:5000/readblogswithcategory/${category}`;
@@ -43,7 +47,7 @@ const BlogLoadByCategory = () => {
     {singleBlog.title.slice(0,25)} 
     </Link>
     <p className='mb-2 text-xs'>By <span className='font-bold'>{singleBlog.authorName}</span>, Published on {singleBlog.date} </p>
-    <p>{singleBlog.description.slice(0,60)}.....</p>
+    <p>{parseHtml(singleBlog.description.slice(0,38))}.....</p>
     
   <Link to={`/blog/${singleBlog._id}`}  className='flex items-end hover:font-bold text-primary mt-3 hover:ease-in duration-300'>Continue Reading <BiRightArrowAlt className='text-xl font-extrabold'/> </Link>
   </div>
