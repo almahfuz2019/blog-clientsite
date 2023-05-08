@@ -92,9 +92,9 @@ const ManageData = () => {
                  <Link to={`/updateblog/${blog._id}`}>
                  <FaRegEdit/>
                  </Link>
-                 <Link onClick={()=>handleProductDelete(blog._id)}>
+                 {/* <Link onClick={()=>handleProductDelete(blog._id)}>
                  <FaRegTrashAlt/>
-                 </Link>
+                 </Link> */}
                 </td>
               </tr>
             </tbody>

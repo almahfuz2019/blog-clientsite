@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import UseCategory from "../../Hooks/UseCategory";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../../Shired/Loading";
+import auth from "../../../firebase.init";
+import { useAuthState } from "react-firebase-hooks/auth";
+import UseToken from "../../Hooks/UseToken";
 const UpdateBlog = () => {
   const { id } = useParams();
+  const navigate=useNavigate();
   const [image, setimage] = useState("");
   const [isloading, setIsloading] = useState(true);
-
+  const [user] = useAuthState(auth);
+  const [token, authUser] = UseToken(user);
   const { categorys, loadCategorys } = UseCategory();
   const [blog, setBlog] = useState({});
   const {
@@ -22,18 +27,19 @@ const UpdateBlog = () => {
     // Send the updated data to the server
     axios
       .put(`http://localhost:5000/updateblog/${id}`, { ...formData, image })
-      .then((response) =>
-        toast.success("Update Successfully", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: false,
-          progress: undefined,
-          theme: "colored",
-        })
-      )
+      .then(response => {
+        toast.success('Submitted Successfully', {
+                       position: "top-right",
+                       autoClose: 1000,
+                       hideProgressBar: false,
+                       closeOnClick: true,
+                       pauseOnHover: true,
+                       draggable: false,
+                       progress: undefined,
+                       theme: "colored",
+                       });
+                       navigate("/deshboard/blogs")
+               })
       .catch((error) => console.log(error));
   };
   // first image
@@ -162,7 +168,10 @@ const UpdateBlog = () => {
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
                 >
                   <option value="waiting">Waiting </option>
+                  {
+                    authUser?.role==="Admin" &&
                   <option value="Available">Available</option>
+                  }
                 </select>
               </div>
               <div className="relative mb-4">
@@ -174,10 +183,12 @@ const UpdateBlog = () => {
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   onChange={firstImageUpload}
                 />
-                <img src={blog?.image} alt="" className="w-10 h-10" />
+               <div className="flex justify-center mt-5">
+               <img src={blog?.image} alt="" className="w-24 h-24" />
+               </div>
               </div>
               <input
-                className="text-white bg-primary border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                className="text-white bg-primary border-0 py-2 px-6 focus:outline-none cursor-pointer hover:bg-indigo-600 rounded text-lg"
                 value="Submit"
                 type="submit"
               />

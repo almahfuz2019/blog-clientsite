@@ -2,7 +2,43 @@ import React from 'react';
 import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const Contact = () => {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const navigate=useNavigate();
+  const onSubmit = (data) => {
+    console.log(data);
+    axios.post("http://localhost:5000/createusermessage",data)
+    .then(response => {
+    toast.success('Submitted Successfully', {
+                   position: "top-right",
+                   autoClose: 1000,
+                   hideProgressBar: false,
+                   closeOnClick: true,
+                   pauseOnHover: true,
+                   draggable: false,
+                   progress: undefined,
+                   theme: "colored",
+                   });
+                   navigate("/")
+         data.target.reset();
+           })
+           .catch(error => {
+              toast.error({error}, {
+                   position: "top-right",
+                   autoClose: 2000,
+                   hideProgressBar: false,
+                   closeOnClick: true,
+                   pauseOnHover: true,
+                   draggable: true,
+                   progress: undefined,
+                   theme: "colored",
+                   });
+           });
+       };
   const [user, loading, error] = useAuthState(auth);
   if(loading){
     return <Loading/>
@@ -17,15 +53,22 @@ const Contact = () => {
     <div class="lg:w-1/3 md:w-1/2 bg-white rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md">
       <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2>
       <p class="leading-relaxed mb-5 text-gray-600">Post-ironic portland shabby chic echo park, banjo fashion axe</p>
+      <form onSubmit={handleSubmit(onSubmit)}>
       <div class="relative mb-4">
         <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
-        <input value={user?.email || ""} type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
+        <input {...register("userEmail")} value={user?.email || ""} type="email" id="email" name="email" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
       </div>
       <div class="relative mb-4">
         <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
-        <textarea id="message" name="message" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+        <textarea {...register("userComment", {
+                    required: "Message is Required",
+                  })} class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+      {errors.userComment && (
+                  <p className="text-red-500">{errors.userComment.message}</p>
+                )}
       </div>
-      <button class="text-white bg-primary border-0 py-2 px-6 focus:outline-none  rounded text-lg">Button</button>
+      <input type='submit' value="Send" class="text-white bg-primary border-0 py-2 px-6 focus:outline-none  rounded text-lg cursor-pointer"/>
+      </form>
       <p class="text-xs text-gray-500 mt-3">Chicharrones blog helvetica normcore iceland tousled brook viral artisan.</p>
     </div>
   </div>

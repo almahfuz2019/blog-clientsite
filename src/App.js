@@ -23,7 +23,6 @@ import ForgetPassword from './Components/Authentication/ForgetPassword';
 import ManageData from './Components/Deshboard/userSpacificData/ManageData';
 import AllAuthors from './Components/Deshboard/AuthorsData/AllAuthors';
 import UserRole from './Components/Deshboard/AuthorsData/UserRole';
-import ForTest from './Components/Client-site/ForTest';
 
 function App() {
   return (
@@ -33,7 +32,6 @@ function App() {
     <Routes>
       <Route path='/' element={<Blogs/>}/>
       <Route path='/faq' element={<FAQ/>}/>
-      <Route path='/test' element={<ForTest/>}/>
       <Route path='/authors' element={<Authors/>}/>
       <Route path='/contact' element={<RequireAuth><Contact/></RequireAuth>}/>
       <Route path='/login' element={<Login/>}/>
