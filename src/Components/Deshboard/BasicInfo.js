@@ -2,8 +2,12 @@ import React from 'react';
 import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
+import UseDataCount from '../Hooks/UseDataCount';
+import UseToken from '../Hooks/UseToken';
 const BasicInfo = () => {
   const [user, loading, error] = useAuthState(auth);
+  const {blogsCount,categoryCount,userCount,contactCount, waitingBlogsCount}=UseDataCount();
+  const [token, authUser] = UseToken(user);
   if(loading){
     return <Loading/>
   }
@@ -27,18 +31,18 @@ if (hours < 12) {
            
               </h2>
             </div>
-        
+        <>{authUser?.role==="Admin" &&
             <div className="mt-8 sm:mt-12">
               <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
                 <div
                   className="flex flex-col rounded-lg border border-primary px-4 py-8 text-center"
                 >
                   <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Products
+                    Total Blogs
                   </dt>
         
                   <dd className="text-4xl font-extrabold text-primary md:text-5xl">
-                    34
+                    {blogsCount.count}
                   </dd>
                 </div>
         
@@ -47,10 +51,10 @@ if (hours < 12) {
                 >
                
                   <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Orders
+                    Waiting Blogs
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">435</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{waitingBlogsCount.count}</dd>
                   
                 </div>
                 <div
@@ -58,10 +62,10 @@ if (hours < 12) {
                 >
                
                   <dt className="order-last text-lg font-medium text-gray-500">
-                    Pending Orders
+                  Available Blogs
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">54</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{blogsCount.count-waitingBlogsCount.count}</dd>
                   
                 </div>
                 <div
@@ -69,10 +73,10 @@ if (hours < 12) {
                 >
                
                   <dt className="order-last text-lg font-medium text-gray-500">
-                    Completed Orders
+                    Category
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">43</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{categoryCount.count}</dd>
                   
                 </div>
                 <div
@@ -80,10 +84,10 @@ if (hours < 12) {
                 >
                
                   <dt className="order-last text-lg font-medium text-gray-500">
-                     Orders in Shipment
+                     Total Users
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">54</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{userCount.count}</dd>
                   
                 </div>
                 <div
@@ -93,48 +97,13 @@ if (hours < 12) {
                     Total Messages
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">43</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{contactCount.count}</dd>
                 </div>
-                <div
-                  className="flex flex-col rounded-lg border border-primary px-4 py-8 text-center"
-                >
-                  <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Amount (Shipment)
-                  </dt>
-        
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">54</dd>
-                </div>
-                <div
-                  className="flex flex-col rounded-lg border border-primary px-4 py-8 text-center"
-                >
-                  <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Amount (Done)
-                  </dt>
-        
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">43</dd>
-                </div>
-                <div
-                  className="flex flex-col rounded-lg border border-primary px-4 py-8 text-center"
-                >
-                  <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Amount (Cencel)
-                  </dt>
-        
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">43</dd>
-                </div>
-                <div
-                  className="flex flex-col rounded-lg border border-primary px-4 py-8 text-center"
-                >
-                  <dt className="order-last text-lg font-medium text-gray-500">
-                    Total Amount (Wating)
-          
-                  </dt>
-        
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">30</dd>
-                </div>
+                
                
               </dl>
             </div>
+       } </>
           </div>
         </section>
           </div>

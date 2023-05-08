@@ -7,10 +7,11 @@ import { FaAlignLeft } from 'react-icons/fa';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import UseToken from '../Hooks/UseToken';
+import UseDataCount from '../Hooks/UseDataCount';
 const Deshboard = () => {
   const [user] = useAuthState(auth);
   const [token, authUser] = UseToken(user);
-
+ const {blogsCount,categoryCount,userCount,contactCount, waitingBlogsCount}=UseDataCount();
      return (
      <>
      <div className="drawer drawer-start drawer-mobile ">
@@ -36,8 +37,8 @@ const Deshboard = () => {
      </div>
      <input className=" bg-gray-500 focus:outline-none rounded w-full text-sm text-white  pl-10 py-2" type="text" placeholder="Search" />
          </div>
-     <li className=' text-white bg-gray-500 mt-2 '>
-     <NavLink to="#" className="flex items-center  active:bg-primary ">
+         <li className=' text-white bg-gray-500 mt-2 '>
+     <NavLink to="/deshboard" className="flex items-center  active:bg-primary ">
      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-grid" width={18} height={18} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
      <path stroke="none" d="M0 0h24v24H0z" />
      <rect x={4} y={4} width={6} height={6} rx={1} />
@@ -47,11 +48,6 @@ const Deshboard = () => {
      </svg>
      <span className="text-sm  ml-2">Basic Info</span>
      </NavLink></li>
-     {authUser?.role ==="Admin" && <li className=' text-white bg-gray-500 mt-2 '>
-       <NavLink to="blogs" className="flex items-center  active:bg-primary ">
-     <BsInfoSquare/>
-     <span className="text-sm  ml-2">Blogs</span>
-     </NavLink></li>}
      {authUser?.role ==="Admin"&& <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="addvlog" className="flex items-center  active:bg-primary ">
      <AiOutlineAppstoreAdd/>
@@ -62,6 +58,13 @@ const Deshboard = () => {
      <AiOutlineAppstoreAdd/>
      <span className="text-sm  ml-2">Add Blog</span>
      </NavLink></li>}
+     {authUser?.role ==="Admin" && <li className=' text-white bg-gray-500 mt-2 '>
+       <NavLink to="blogs" className="flex items-center  active:bg-primary ">
+     <BsInfoSquare/>
+     <span className="text-sm  ml-2">Blogs <span className='bg-primary rounded p-2 text-white font-bold text-end'>{blogsCount.count}</span></span>
+     
+     </NavLink></li>}
+   
      {authUser?.role ==="Admin" &&<li className=' text-white bg-gray-500 mt-2 '>
         <NavLink to="waiting-blogs" className="flex items-center  active:bg-primary ">
      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-grid" width={18} height={18} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -71,28 +74,28 @@ const Deshboard = () => {
      <rect x={4} y={14} width={6} height={6} rx={1} />
      <rect x={14} y={14} width={6} height={6} rx={1} />
       </svg>
-      <span className="text-sm  ml-2">Waiting Blog <span className='bg-primary rounded p-2 text-white font-bold text-end'>43</span></span>
+      <span className="text-sm  ml-2">Waiting Blog <span className='bg-primary rounded p-2 text-white font-bold text-end'>{waitingBlogsCount.count}</span></span>
         </NavLink></li>}
         {authUser?.role ==="Admin" && <li className=' text-white bg-gray-500 mt-2'>
         <NavLink to="categorys" className="flex items-center  active:bg-primary">
      <TbShoppingCartDiscount/>
-      <span className="text-sm  ml-2">Categorys <span className='bg-primary rounded p-2 text-white font-bold text-end'>78</span></span>
+      <span className="text-sm  ml-2">Categorys <span className='bg-primary rounded p-2 text-white font-bold text-end'>{categoryCount.count}</span></span>
         </NavLink></li>}
         {authUser?.role ==="Admin" &&  <li className=' text-white bg-gray-500 mt-2 '>
         <NavLink to="authors" className="flex items-center  active:bg-primary ">
       <CiShoppingBasket/>
-      <span className="text-sm  ml-2">Authors <span className='bg-primary rounded p-2 text-white font-bold text-end'>56</span></span>
+      <span className="text-sm  ml-2">Authors <span className='bg-primary rounded p-2 text-white font-bold text-end'>{userCount.count}</span></span>
         </NavLink></li>}
      
-         {authUser?.role ==="Admin" || authUser?.role==="Author" && <li className=' text-white bg-gray-500 mt-2 '>
+         {authUser?.role==="Author" && <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="manageData" className="flex items-center  active:bg-primary ">
       <AiOutlineUsergroupAdd/>
-      <span className="text-sm  ml-2">User Data <span className='bg-primary rounded p-2 text-white font-bold text-end'>45</span></span>
+      <span className="text-sm  ml-2">Your Data </span>
         </NavLink></li>}
         {authUser?.role ==="Admin" && <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="contact" className="flex items-center  active:bg-primary text-white">
       <AiOutlineMail/>
-      <span className="text-sm  ml-2">Messages <span className='bg-primary rounded p-2 text-white font-bold text-end'>34</span></span>
+      <span className="text-sm  ml-2">Messages <span className='bg-primary rounded p-2 text-white font-bold text-end'>{contactCount.count}</span></span>
       </NavLink></li>}
     </ul>
   </div>

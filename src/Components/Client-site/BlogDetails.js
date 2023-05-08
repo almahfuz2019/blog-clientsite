@@ -11,9 +11,6 @@ const BlogDetails = () => {
      const [blog,setBlog]=useState({});
      const [error,setError]=useState("");
      const quillHtml = blog.description;
-     // const parser = new DOMParser();
-     // const quillDoc = parser.parseFromString(quillHtml, "text/html");
-     // const plainText = quillDoc.body.textContent;
      const detailsOfBlog = async() => {
 try{
     const response=await axios.get(`http://localhost:5000/readblog/${id}`)
@@ -51,7 +48,7 @@ detailsOfBlog();
 <br />
 </div>
 <div>
-<LoadAllCategorys/>
+<LoadAllCategorys />
 </div>
 
 </div>

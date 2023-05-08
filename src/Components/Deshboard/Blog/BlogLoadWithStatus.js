@@ -2,13 +2,13 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-const ManageBlogs = () => {
+const BlogLoadWithStatus = () => {
      const [keywords,setKeywords]=useState("")
     const[blogs,setBlogs]=useState([]);
     const [productsCount,setProductsCount]=useState([]);
     console.log(productsCount.message);
     useEffect(()=>{
-      fetch("http://localhost:5000/blogscount")
+      fetch("http://localhost:5000/waitingblogscount")
       .then(res=>res.json())
       .then(data=>setProductsCount(data))
   },[blogs])
@@ -30,7 +30,7 @@ const ManageBlogs = () => {
 }
   //get allproducts 
       const fetchProducts = () => {
-         fetch(`http://localhost:5000/readblogs`)
+         fetch(`http://localhost:5000/readblogswithwaiting`)
          .then(res=>res.json())
          .then(data=>setBlogs(data))
        }
@@ -110,4 +110,4 @@ const ManageBlogs = () => {
                </div>
      );
 };
-export default ManageBlogs;
+export default BlogLoadWithStatus;

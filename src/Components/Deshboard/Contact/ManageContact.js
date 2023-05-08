@@ -1,11 +1,11 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { FaRegEdit } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { HiOutlineEye } from "react-icons/hi";
 import UseDataCount from '../../Hooks/UseDataCount';
-const AllAuthors = () => {
- const {userCount}=UseDataCount();
+const ManageContact = () => {
+  const {contactCount}=UseDataCount()
      const [authors,setAuthors]=useState([]);
      useEffect(()=>{
           detailsOfBlog();
@@ -14,11 +14,7 @@ const AllAuthors = () => {
 
      const detailsOfBlog = async() => {
           try{
-              const response=await axios.get(`http://localhost:5000/getusers`, {
-                headers: {
-                  'authorization': `Bearer ${localStorage.getItem("accessToken")}`
-                }
-              })
+              const response=await axios.get(`http://localhost:5000/readmessage`)
               // console.log("res",response);
               setAuthors(response.data)
           }catch(error){
@@ -29,7 +25,7 @@ const AllAuthors = () => {
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {userCount.count}</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {contactCount.count}</span></div>
         
      <div className='mx-auto text-center mb-5'>
      <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" />
@@ -49,15 +45,13 @@ const AllAuthors = () => {
               <tr className='border bg-white'>
                 <th>{index+1}</th>
                 <td>
-                {blog?.email} 
+                {blog?.userEmail} 
                 </td>
                 <td>
-                {blog?.role} 
+                {blog?.userComment.slice(0,20)} 
                 </td>
                 <td className='flex gap-3 text-2xl'>
-                 <Link to={`/updaterole/${blog._id}`}>
-                 <FaRegEdit/>
-                 </Link>
+                <Link to={`/contact/${blog._id}`} > <HiOutlineEye className='text-2xl font-extrabold'/> </Link>
                 </td>
               </tr>
             </tbody>
@@ -68,4 +62,4 @@ const AllAuthors = () => {
                </div>
      );
 };
-export default AllAuthors;
+export default ManageContact;

@@ -4,15 +4,13 @@ import { useState } from 'react';
 import Loading from '../../Shired/Loading';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
-import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import { FaRegEdit} from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 const ManageData = () => {
- 
      const [userData,setUserData]=useState([]);
      useEffect(()=>{
           detailsOfBlog();
      },[userData]);
-
      const [user, loading, error] = useAuthState(auth);
      const authorEmail=user?.email;
       // delete products 
@@ -48,7 +46,7 @@ const ManageData = () => {
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: 34</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {userData.length}</span></div>
         
      <div className='mx-auto text-center mb-5'>
      <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" />
