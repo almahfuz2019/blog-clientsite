@@ -10,7 +10,7 @@ const Advertisement = () => {
 </h2>
 <div className="space-x-2 text-xl mt-3 text-center py-2 lg:py-0 text-white">
 <span>Plus free shipping! Use code:</span>
-<span className="font-bold text-lg">MAMBA</span>
+<span className="font-bold text-lg">MAAMA MIA</span>
 </div>
 <a href="https://www.daraz.com.bd/" rel="noreferrer noopener" className="px-5 mt-4 lg:mt-0 py-3 rounded-md border block text-white">Shop Now</a>
 </div>

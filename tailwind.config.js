@@ -9,7 +9,7 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        light: {        
+light: {        
 "primary": "#1e40af",
 "secondary": "#FFC000",
 "accent": "#FFEDD5",

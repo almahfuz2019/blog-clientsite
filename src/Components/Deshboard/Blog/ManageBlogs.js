@@ -4,6 +4,7 @@ import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 const ManageBlogs = () => {
      const [keywords,setKeywords]=useState("")
+     console.log(keywords);
     const[blogs,setBlogs]=useState([]);
     const [productsCount,setProductsCount]=useState([]);
     console.log(productsCount.message);
@@ -15,6 +16,21 @@ const ManageBlogs = () => {
   const handleSearch = (e) => {
     setKeywords(e.target.value);
   };
+  // search 
+  useEffect(()=>{
+    const url=`http://localhost:5000/blog/search/${keywords}`;
+    console.log(url);
+    if(keywords!==""){
+      fetch(url)
+      .then(res=>res.json())
+      .then(data=>{
+        setBlogs(data)
+       
+      })
+    }else if(keywords===""){
+      fetchProducts()
+    }
+  },[keywords])
   // delete products 
   const handleProductDelete=async(id)=>{
     const proceed=window.confirm("are you sure you want to delete?");
@@ -37,23 +53,10 @@ const ManageBlogs = () => {
   useEffect(()=>{
     fetchProducts()
   },[])
-  useEffect(()=>{
-    const url=`https://chaayasurgical.onrender.com/productsearch?keywords=${keywords}`;
-    if(keywords!==""){
-      fetch(url)
-      .then(res=>res.json())
-      .then(data=>{
-        setBlogs(data)
-       
-      })
-    }else if(keywords===""){
-      fetchProducts()
-    }
-  },[keywords])
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {productsCount.count}</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Blogs: {productsCount.count}</span></div>
         
      <div className='mx-auto text-center mb-5'>
      <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" onChange={handleSearch}/>

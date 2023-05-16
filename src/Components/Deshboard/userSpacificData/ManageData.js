@@ -13,29 +13,12 @@ const ManageData = () => {
      },[userData]);
      const [user, loading, error] = useAuthState(auth);
      const authorEmail=user?.email;
-      // delete products 
-  const handleProductDelete=async(id)=>{
-     const proceed=window.confirm("are you sure you want to delete?");
-     if(proceed){
-     await axios.delete(`http://localhost:5000/deleteblog/${id}`)
-      .then(response=>{
-           if(response.data.deletedCount>0){
-                const deletedremaining=userData.filter(x=>x._id !==id);
-                setUserData(deletedremaining)
-           }
-      })
- }
- }
      if(loading){
        return <Loading/>
      }
      const detailsOfBlog = async() => {
           try{
-              const response=await axios.get(`http://localhost:5000/readblogswithemail/${authorEmail}`, {
-                headers: {
-                  'authorization': `Bearer ${localStorage.getItem("accessToken")}`
-                }
-              })
+              const response=await axios.get(`http://localhost:5000/readblogswithemail/${authorEmail}`)
               // console.log("res",response);
               setUserData(response.data)
           }catch(error){
@@ -46,7 +29,7 @@ const ManageData = () => {
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Products: {userData.length}</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Blogs: {userData.length}</span></div>
         
      <div className='mx-auto text-center mb-5'>
      <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" />

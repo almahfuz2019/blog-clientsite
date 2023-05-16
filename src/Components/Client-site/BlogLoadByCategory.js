@@ -26,7 +26,7 @@ const BlogLoadByCategory = () => {
      },[category])
      return (
           <div className='mx-2'>
-          <h1 className='text-center text-xl sm:text-2xl md:text-3xl font-bold my-5 mx-5'>Atatus Blog - For DevOps Engineers, Developers and Server Admins.
+          <h1 className='text-center text-xl sm:text-2xl md:text-3xl font-bold my-5 mx-5'>For DevOps Engineers, Developers and Server Admins.
          </h1>
          <h1 className='text-center text-xl sm:text-2xl md:text-3xl font-bold my-5 mx-5 text-primary underline underline-offset-4'>Total : {blog?.length}</h1>
           <div className="form-control ">

@@ -8,11 +8,13 @@ import { toast } from "react-toastify";
 import auth from "../../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Loading from "../../Shired/Loading";
+import UseToken from "../../Hooks/UseToken";
 const AddVlog = () => {
   const { categorys, loadCategorys } = UseCategory();
   const [user, loading, error] = useAuthState(auth);
   const [image, setimage] = useState("");
   const [description, setDescription] = useState("");
+  const [token, authUser] = UseToken(user);
   useEffect(() => {
     loadCategorys();
   }, []);
@@ -190,7 +192,8 @@ const AddVlog = () => {
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
                 >
                   <option value="waiting">Waiting </option>
-                  <option value="Available">Available</option>
+                  {authUser?.role ==="Admin"&&
+                  <option value="Available">Available</option>}
                 </select>
               </div>
               <div className="relative mb-4">

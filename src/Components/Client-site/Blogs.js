@@ -1,36 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import SingleBlog from './SingleBlog';
 import Advertisement from '../Shired/advertisement';
 import axios from 'axios';
 import Loading from '../Shired/Loading';
 import { Link } from 'react-router-dom';
 import { BiRightArrowAlt } from 'react-icons/bi';
 import { useForm } from 'react-hook-form';
-
+import UseDataCount from '../Hooks/UseDataCount';
 const Blogs = () => {
-  const[products,setProducts]=useState([]);
-  const[productLoading,setProductLoading]=useState(true);
+  const {blogsCount,waitingBlogsCount}=UseDataCount();
+  const[blogs,setBlogs]=useState([]);
+  const[blogsLoading,setBlogsLoading]=useState(true);
   const[page,setPage]=useState(1);
   const [error,setError]=useState("");
   const[size,setSize]=useState(4);
   const[pageCount,setPageCount]=useState(0);
-  const [keywords,setKeywords]=useState("")
-  const fetchProducts = async() => {
+  const [keywords,setKeywords]=useState("");
+  // get data 
+  const fetchBlogs = async() => {
     try{
-    //   setProductLoading(true);
-      const url=`http://localhost:5000/data?page=${page}&limit=${size}`;
-    //   console.log(url);
+      // setBlogsLoading(true);
+      const url=`http://localhost:5000/blogs?page=${page}&limit=${size}`;
       const response=await axios.get(url);
       setPageCount(Math.ceil(response.data.count/size));
-          setProducts(response.data);
-         //  setProductLoading(false);
+          setBlogs(response.data);
+          setBlogsLoading(false);
     }
     catch(error){
-      setError("something is wrong.Please try again")
+      setError("Something is wrong. Please try again")
     };
   }
   useEffect(()=>{
-      fetchProducts()
+      fetchBlogs()
     },[size,page])
 //  
   const loadMore=()=>{
@@ -41,39 +41,36 @@ const Blogs = () => {
       return doc.body.textContent || '';
     };
   useEffect(()=>{
-    setProductLoading(true)
-    fetchProducts();
-    setProductLoading(false)
+    setBlogsLoading(true)
+    fetchBlogs();
+    setBlogsLoading(false)
   },[size,page])
   // data search start
   useEffect(()=>{
     const url=`http://localhost:5000/user/search/${keywords}`;
     console.log(url);
     if(keywords!==""){
-      setProductLoading(true)
+      setBlogsLoading(true)
       fetch(url)
       .then(res=>res.json())
       .then(data=>{
-        setProducts(data)
+        setBlogs(data)
         setPageCount(Math.ceil(data.length/size))
-        setProductLoading(false)
+        setBlogsLoading(false)
       })
     }else if(keywords===""){
-      fetchProducts()
+      fetchBlogs()
     }
   },[keywords]) 
-  const handleSearch = (e) => {
-    setKeywords(e.target.value);
-  };
   // data search end
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => setKeywords(data.searchdata);
-  if(productLoading){
+  if(blogsLoading){
     return <Loading/>
   }
      return (
           <div className='mx-2'>
-          <h1 className='text-center text-xl sm:text-2xl md:text-3xl font-bold my-5 mx-5'>Atatus Blog - For DevOps Engineers, Developers and Server Admins.</h1>
+          <h1 className='text-center text-xl sm:text-2xl md:text-3xl font-bold my-5 mx-5'>For Engineers, Developers and Server Admins.</h1>
           <div className="form-control ">
   <div className="input-group flex justify-center ">
     <form  onSubmit={handleSubmit(onSubmit)} className='flex'>
@@ -84,10 +81,30 @@ const Blogs = () => {
     </form>
   </div>
 </div>
+{/* not found page start */}
+{error !== "" && <main class="h-96 w-full flex flex-col justify-center items-center ">
+	<h1 class="text-9xl font-extrabold text-gray-900 tracking-widest">404</h1>
+	<div class="bg-primary px-2 text-sm rounded rotate-12 absolute text-white">
+		Page Not Found
+	</div>
+	<button class="mt-5">
+      <a
+        class="relative inline-block text-sm font-medium text-primary group active:text-orange-500 focus:outline-none focus:ring"
+      >
+        <span
+          class="absolute inset-0 transition-transform translate-x-0.5 translate-y-0.5 bg-primary group-hover:translate-y-0 group-hover:translate-x-0"
+        ></span>
+
+        <span class="relative block px-8 py-3 bg-[#1A2238] border border-current">
+          <Link className='text-white' to="/">Please, Try again later</Link>
+        </span>
+      </a>
+    </button>
+</main>}
+{/* not found page end */}
            <div className='grid grid-cols-1 md:grid-cols-4 gap-4 my-10 '>
      <>
-     {products.map(singleBlog=>
-                
+     {blogs.map(singleBlog=>
                 <div className=" w-full bg-base-200 shadow" key={singleBlog._id}>
   <img className='rounded-none' src={singleBlog.image} alt="Shoes" />
   <div className="px-2 pb-5">
@@ -104,13 +121,13 @@ const Blogs = () => {
 </div>
                )}</>
           </div>  
-          {products.length===0 ?"":<div className='mx-auto text-center mt-5'>
+          {blogs.length===0 || (blogs.length=== blogsCount.count-waitingBlogsCount.count) ?"" :<div className='mx-auto text-center mt-5'>
   <button className='btn btn-primary w-64 btn-sm sm:btn-md' onClick={loadMore}>load more</button> 
   </div>
 }
-{
-    products.length === 0 && <h1 className='text-3xl text-center justify-center mx-auto text-red-700 font-bold h-screen'>Not found</h1>
-  }
+{/* {
+    blogs.length === 0 && <h1 className='text-3xl text-center justify-center mx-auto text-red-700 font-bold h-screen'>Not found</h1>
+  } */}
                 {/* advertisements  */}
                 <Advertisement/>
           </div>
