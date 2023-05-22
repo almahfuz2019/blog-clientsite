@@ -125,9 +125,9 @@ const Blogs = () => {
   <button className='btn btn-primary w-64 btn-sm sm:btn-md' onClick={loadMore}>load more</button> 
   </div>
 }
-{/* {
-    blogs.length === 0 && <h1 className='text-3xl text-center justify-center mx-auto text-red-700 font-bold h-screen'>Not found</h1>
-  } */}
+{
+    blogs?.length === 0 && <h1 className='text-3xl text-center justify-center mx-auto text-red-700 font-bold h-screen'>Not found</h1>
+  }
                 {/* advertisements  */}
                 <Advertisement/>
           </div>

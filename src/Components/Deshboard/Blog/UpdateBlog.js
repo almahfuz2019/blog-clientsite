@@ -11,12 +11,12 @@ import UseToken from "../../Hooks/UseToken";
 const UpdateBlog = () => {
   const { id } = useParams();
   const navigate=useNavigate();
-  const [image, setimage] = useState("");
   const [isloading, setIsloading] = useState(true);
   const [user] = useAuthState(auth);
   const [token, authUser] = UseToken(user);
   const { categorys, loadCategorys } = UseCategory();
   const [blog, setBlog] = useState({});
+  const [image, setimage] = useState(blog?.image);
   const {
     register,
     handleSubmit,
@@ -38,7 +38,7 @@ const UpdateBlog = () => {
                        progress: undefined,
                        theme: "colored",
                        });
-                       navigate("/deshboard/blogs")
+                      //  navigate("/deshboard/blogs")
                })
       .catch((error) => console.log(error));
   };
@@ -128,22 +128,20 @@ const UpdateBlog = () => {
                   {" "}
                   Description
                 </label>
-                <textarea
+                <input
                   {...register("description")}
-                  id="message"
-                  name="message"
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
-                  defaultValue={blog.description}
-                ></textarea>
+                  defaultValue={blog?.description}
+              />
               </div>
               <div className="relative mb-4 mt-5">
                 <label className="leading-7 text-sm text-gray-600">
                   Select a category
                 </label>
                 <select
-                  {...register("category")}
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
-                >
+                    {...register("category")}
+                  >
                   {categorys.map((category) => {
                     return (
                       <option
