@@ -70,7 +70,7 @@ const AddVlog = () => {
 
         console.log(submitData);
 
-        // data.target.reset();
+        data.target.reset();
       })
       .catch((error) => {
         console.log(error);

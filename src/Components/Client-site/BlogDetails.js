@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import UserComment from './UserComment';
 import LoadUserComments from './LoadUserComments';
 import LoadAllCategorys from './LoadAllCategorys';
 import Advertisement from '../Shired/advertisement';
+import { BsFacebook, BsLinkedin, BsTwitter, BsWhatsapp } from "react-icons/bs";
+
+import { MdShare } from "react-icons/md";
 import "./Style.css";
 const BlogDetails = () => {
      const {id}=useParams();
@@ -12,16 +15,40 @@ const BlogDetails = () => {
      const [error,setError]=useState("");
      const quillHtml = blog.description;
      const detailsOfBlog = async() => {
-try{
-    const response=await axios.get(`http://localhost:5000/readblog/${id}`)
-    setBlog(response.data)
-}catch(error){
-    setError("something is wrong.Please try again")
-}
-      }
-      useEffect(()=>{
-detailsOfBlog();
-      },[id]);
+          try{
+               const response=await axios.get(`http://localhost:5000/readblog/${id}`)
+               setBlog(response.data)
+          }catch(error){
+               setError("something is wrong.Please try again")
+          }
+     }
+     useEffect(()=>{
+          detailsOfBlog();
+     },[id]);
+           let shareblog=
+          [
+  {
+    title: "facebook",
+    url: "https://www.facebook.com/sharer.php?u=",
+    icon: <BsFacebook />,
+  },
+  {
+    title: "whatsapp",
+    url: "https://api.whatsapp.com/send?text=",
+    icon: <BsWhatsapp />,
+  },
+  {
+    title: "linkedin",
+    url: "https://www.linkedin.com/sharing/share-offsite/?url=",
+    icon: <BsLinkedin />,
+  },
+  {
+    title: "twiter",
+    url: "https://twitter.com/share?url=",
+    icon: <BsTwitter />,
+  },
+];
+let siteurl= window.location.href
 
      return (
 <div className='mx-3'>
@@ -40,6 +67,29 @@ detailsOfBlog();
      </div>
   {/* advertisements  */}
   <Advertisement/>
+  {/* blog share */}
+  <div className="mb-5 ">
+      <div className="flex justify-between border border-gray-400 p-4 rounded-lg">
+        <span className="flex items-center gap-3">
+          <MdShare className="text-green-600" /> share this article
+        </span>
+
+        <div className="flex gap-4">
+          {shareblog.map((item) => (
+            <a
+              key={item.title}
+          //     href={item.url + siteInfo.url + router.asPath}
+              href={item.url+ siteurl}
+              target="_blank"
+              rel="noreferrer"
+              className="border border-gray-400 p-2 rounded-lg text-2xl hover:border-primary"
+            >
+              {item.icon}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
 {/* user form  */}
 <UserComment/>
 {/* user comments  */}

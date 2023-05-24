@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate} from 'react-router-dom';
-import auth from '../../firebase.init';
 import { useForm } from "react-hook-form";
 import SocialLogin from './SocialLogin';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';

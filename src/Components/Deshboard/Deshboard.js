@@ -37,6 +37,11 @@ const Deshboard = () => {
      </div>
      <input className=" bg-gray-500 focus:outline-none rounded w-full text-sm text-white  pl-10 py-2" type="text" placeholder="Search" />
          </div>
+     <li className=' text-white bg-gray-500 mt-2 '>
+     <NavLink to="profile" className="flex items-center  active:bg-primary ">
+      <AiOutlineUsergroupAdd/>
+      <span className="text-sm  ml-2">Profile </span>
+        </NavLink></li>
          <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="/deshboard" className="flex items-center  active:bg-primary ">
      <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-grid" width={18} height={18} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -92,6 +97,7 @@ const Deshboard = () => {
       <AiOutlineUsergroupAdd/>
       <span className="text-sm  ml-2">Your Data </span>
         </NavLink></li>}
+        
         {authUser?.role ==="Admin" && <li className=' text-white bg-gray-500 mt-2 '>
      <NavLink to="contact" className="flex items-center  active:bg-primary text-white">
       <AiOutlineMail/>

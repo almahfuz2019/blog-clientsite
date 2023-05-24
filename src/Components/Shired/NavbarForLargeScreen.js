@@ -7,6 +7,7 @@ import { signOut } from 'firebase/auth';
 import Loading from './Loading';
 const NavbarForLargeScreen = () => {
   const [user, loading, error] = useAuthState(auth);
+  console.log(user);
   if(loading){
     return <Loading/>
   }

@@ -6,9 +6,10 @@ import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
 import UseToken from '../Hooks/UseToken';
+import { useRef } from 'react';
 const Registration = () => {
   const [agree,setAgree]=useState(false);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register,watch, formState: { errors }, handleSubmit } = useForm();
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [
       createUserWithEmailAndPassword,
@@ -16,6 +17,7 @@ const Registration = () => {
       loading,
       error,
     ] = useCreateUserWithEmailAndPassword(auth);
+  
     const[token]=UseToken(user?.user);
     const navigate =useNavigate();
     let location = useLocation();

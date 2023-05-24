@@ -8,38 +8,42 @@ import Loading from "../../Shired/Loading";
 import auth from "../../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UseToken from "../../Hooks/UseToken";
+import ReactQuill from "react-quill";
 const UpdateBlog = () => {
   const { id } = useParams();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [isloading, setIsloading] = useState(true);
   const [user] = useAuthState(auth);
   const [token, authUser] = UseToken(user);
   const { categorys, loadCategorys } = UseCategory();
   const [blog, setBlog] = useState({});
   const [image, setimage] = useState(blog?.image);
+  const [description, setDescription] = useState("");
+  console.log(description);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (formData) => {
-    console.log({ ...formData, image });
+    // console.log({ ...formData, image });
     // Send the updated data to the server
     axios
-      .put(`http://localhost:5000/updateblog/${id}`, { ...formData, image })
-      .then(response => {
-        toast.success('Submitted Successfully', {
-                       position: "top-right",
-                       autoClose: 1000,
-                       hideProgressBar: false,
-                       closeOnClick: true,
-                       pauseOnHover: true,
-                       draggable: false,
-                       progress: undefined,
-                       theme: "colored",
-                       });
-                      //  navigate("/deshboard/blogs")
-               })
+      .put(`http://localhost:5000/updateblog/${id}`, { ...formData, image,description })
+      .then((response) => {
+        toast.success("Submitted Successfully", {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+        //  navigate("/deshboard/blogs")
+        console.log({ ...formData, image,description });
+      })
       .catch((error) => console.log(error));
   };
   // first image
@@ -114,6 +118,7 @@ const UpdateBlog = () => {
                 <label className="leading-7 text-sm text-gray-600">
                   Keywords
                 </label>
+                
                 <input
                   name="keywords"
                   defaultValue={blog.keywords}
@@ -128,11 +133,17 @@ const UpdateBlog = () => {
                   {" "}
                   Description
                 </label>
-                <input
+                <ReactQuill
+                  className="h-32 mb-5"
+                  theme="snow"
+                  defaultValue={blog?.description}
+                  onChange={setDescription}
+                />
+                {/* <textarea
                   {...register("description")}
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                   defaultValue={blog?.description}
-              />
+                ></textarea> */}
               </div>
               <div className="relative mb-4 mt-5">
                 <label className="leading-7 text-sm text-gray-600">
@@ -140,9 +151,11 @@ const UpdateBlog = () => {
                 </label>
                 <select
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
-                    {...register("category")}
-                  >
+                  {...register("category")}
+                >
                   {categorys.map((category) => {
+                    console.log(blog.category);
+                    console.log(category.name);
                     return (
                       <option
                         key={category._id}
@@ -166,10 +179,9 @@ const UpdateBlog = () => {
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
                 >
                   <option value="waiting">Waiting </option>
-                  {
-                    authUser?.role==="Admin" &&
-                  <option value="Available">Available</option>
-                  }
+                  {authUser?.role === "Admin" && (
+                    <option value="Available">Available</option>
+                  )}
                 </select>
               </div>
               <div className="relative mb-4">
@@ -181,9 +193,9 @@ const UpdateBlog = () => {
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                   onChange={firstImageUpload}
                 />
-               <div className="flex justify-center mt-5">
-               <img src={blog?.image} alt="" className="w-24 h-24" />
-               </div>
+                <div className="flex justify-center mt-5">
+                  <img src={blog?.image} alt="" className="w-24 h-24" />
+                </div>
               </div>
               <input
                 className="text-white bg-primary border-0 py-2 px-6 focus:outline-none cursor-pointer hover:bg-indigo-600 rounded text-lg"
