@@ -6,17 +6,18 @@ import auth from '../../firebase.init';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
 import UseToken from '../Hooks/UseToken';
-import { useRef } from 'react';
 const Registration = () => {
   const [agree,setAgree]=useState(false);
     const { register,watch, formState: { errors }, handleSubmit } = useForm();
+    const password = React.useRef({});
+    password.current = watch('password', '');
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [
       createUserWithEmailAndPassword,
       user,
       loading,
       error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth,{sendEmailVerification:true});
   
     const[token]=UseToken(user?.user);
     const navigate =useNavigate();
@@ -103,6 +104,21 @@ const Registration = () => {
             {errors.password?.type === 'minLength' && <p className=' text-red-600' >{errors.password.message}</p>}
             </label>
            </div>
+           <div className="mt-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">Confirm password</label>
+            <input className="bg-gray-200 text-primary focus:outline-primary focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none caret-primary" placeholder='Confirm password' 
+            type="password"
+            {...register('confirmPassword', {
+              required: true,
+              validate: (value) => value === password.current || 'Passwords do not match.',
+            })}
+            />
+            <label className='label'>
+            {<p className=' text-red-600' > {errors.confirmPassword && <span>{errors.confirmPassword.message}</span>}</p>}
+            </label>
+           </div>
+           
+        
          
           
           <div className="mt-2">

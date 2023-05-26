@@ -26,7 +26,7 @@ const Profile = () => {
 				<p className='mb-1'><span className='font-bold '>Email:</span> {user?.email}</p>
 			     <h1  className='mb-1'><span className='font-bold '>Login Time:</span> {user?.metadata?.lastSignInTime}</h1>
                <h1 className='mb-1'> <span className='font-bold'>Creation Time:</span> {user?.metadata?.creationTime}</h1>
-              <h1><span className='font-bold'>Email verification:</span> {user?.emailVerified===true ? "Verified":" Not Verified"}</h1> 
+              <h1><span className='font-bold'>Email verification:</span> {user?.emailVerified===true ? "Verified":<span className='text-rose-700'>Not verifyed.</span>}</h1> 
 				</div>
 			</div>
 		</div>
