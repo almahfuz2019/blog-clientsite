@@ -87,9 +87,9 @@ const Deshboard = () => {
       <span className="text-sm  ml-2">Categorys <span className='bg-primary rounded p-2 text-white font-bold text-end'>{categoryCount.count}</span></span>
         </NavLink></li>:""}
         {authUser?.role ==="Admin" && user?.emailVerified===true ?  <li className=' text-gray-900 font-bold bg-gray-100 mt-2 '>
-        <NavLink to="authors" className="flex items-center  active:bg-primary ">
+        <NavLink to="users" className="flex items-center  active:bg-primary ">
       <CiShoppingBasket/>
-      <span className="text-sm  ml-2">Authors <span className='bg-primary rounded p-2 text-white font-bold text-end'>{userCount.count}</span></span>
+      <span className="text-sm  ml-2">Users <span className='bg-primary rounded p-2 text-white font-bold text-end'>{userCount.count}</span></span>
         </NavLink></li>:""}
      
          {authUser?.role==="Author" && user?.emailVerified===true ? <li className=' text-gray-900 font-bold bg-gray-100 mt-2 '>

@@ -30,6 +30,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useState } from "react";
 import Progress from "./Components/Progress";
 import Profile from "./Components/Deshboard/AuthorsData/Profile";
+import UpdateProfile from "./Components/Deshboard/AuthorsData/UpdateProfile";
 
 function App() {
   const location = useLocation();
@@ -97,7 +98,7 @@ function App() {
                 }
               />
               <Route
-                path="authors"
+                path="users"
                 element={
                   <RequireAuth>
                     <AllAuthors />
@@ -106,6 +107,7 @@ function App() {
               />
               <Route index element={<BasicInfo />} />
               <Route path="addvlog" element={<AddVlog />} />
+              <Route path="profile/update-profile" element={<UpdateProfile />} />
               <Route path="contact" element={<ManageContact />} />
               <Route path="waiting-blogs" element={<BlogLoadWithStatus />} />
 

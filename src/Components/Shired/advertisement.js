@@ -8,7 +8,7 @@ const Advertisement = () => {
 <h2 className="text-center text-5xl md:text-6xl tracking-tighter font-bold text-white">Up to
 50% Off
 </h2>
-<div className="space-x-2 text-xl mt-3 text-center py-2 lg:py-0 text-white">
+<div className="space-x-2 text-xl mt-3 text-center py-2 px-8 lg:py-0 text-white">
 <span>Plus free shipping! Use code:</span>
 <span className="font-bold text-lg">MAAMA MIA</span>
 </div>

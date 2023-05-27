@@ -5,11 +5,22 @@ import SocialLogin from './SocialLogin';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import Loading from '../Shired/Loading';
 import { getAuth } from 'firebase/auth';
+import { useSendSignInLinkToEmail } from 'react-firebase-hooks/auth';
 import { useEffect } from 'react';
 import UseToken from '../Hooks/UseToken';
 const Login = () => {
-  
   const auth = getAuth();
+  const [email, setEmail] = useState('');
+  const [sendSignInLinkToEmail, sending1, error1] = useSendSignInLinkToEmail(
+    auth
+  );
+
+  const actionCodeSettings = {
+    url: 'http://localhost:3000/login',
+    handleCodeInApp: true,
+  };
+
+ 
   const [
     signInWithEmailAndPassword,
     user,
@@ -33,9 +44,22 @@ const Login = () => {
    if(error){
      signInError=<p className='text-red-700'>Error: {error?.message}</p>
    }
-  const onSubmit=data=>{console.log(data)
-signInWithEmailAndPassword(data.email,data.password);
+  const onSubmit=data=>{
+    console.log(data)
+signInWithEmailAndPassword(data.email,data.password)
+
+;
 };
+if (error1) {
+  return (
+    <div>
+      <p>Error: {error1?.message}</p>
+    </div>
+  );
+}
+if (sending1) {
+  return <p>Sending...</p>;
+}
      return (
 <div className=" py-10 bg-white">
 <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl border-primary border border-opacity-30 ">
@@ -43,8 +67,26 @@ signInWithEmailAndPassword(data.email,data.password);
         <div className="w-full p-8 lg:w-1/2">
         <h1 className='text-primary font-bold text-3xl text-center
         '>Mindspace</h1>
-         
         <SocialLogin/>
+          <div className="App mt-5">
+      <input placeholder='Type your e-mail address'  className="bg-gray-200 text-primary focus:outline-primary focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none caret-primary" type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button className="bg-primary text-white font-bold py-2 px-4 w-full rounded cursor-pointer mt-4" 
+        onClick={async () => {
+          const success = await sendSignInLinkToEmail(
+            email,
+            actionCodeSettings
+          );
+          if (success) {
+            alert('Sent email');
+          }
+        }}
+      >
+        Send email
+      </button>
+    </div>
          <form onSubmit={handleSubmit(onSubmit)}>
          <div className="mt-4 flex items-center justify-between">
           <span className="border-b w-1/5 lg:w-1/4"></span>
@@ -98,6 +140,7 @@ signInWithEmailAndPassword(data.email,data.password);
             <input className="bg-primary text-white font-bold py-2 px-4 w-full rounded cursor-pointer " type="submit" value="Login"/>
             </div>
             </form>
+            {/* <p className=' text-red-600' >{error?.message}</p> */}
             <div className="mt-4 flex items-center justify-between">
            <span className="border-b w-1/1"></span>
             <NavLink to="/registration" className="text-xs text-gray-500 ">Don’t have an account? <span className='text-primary font-bold underline'>Sign Up</span> </NavLink>

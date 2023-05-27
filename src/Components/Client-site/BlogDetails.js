@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import UserComment from './UserComment';
 import LoadUserComments from './LoadUserComments';
 import LoadAllCategorys from './LoadAllCategorys';
@@ -69,10 +69,12 @@ let siteurl= window.location.href
   <Advertisement/>
   {/* blog share */}
   <div className="mb-5 ">
-      <div className="flex justify-between border border-gray-400 p-4 rounded-lg">
-        <span className="flex items-center gap-3">
-          <MdShare className="text-green-600" /> share this article
+      <div className="flex justify-center sm:justify-between border border-gray-400 p-4 rounded-lg">
+     
+        <span className="flex items-center gap-3  ">
+          <MdShare className="text-green-600 hidden sm:block" /> <span className='hidden sm:block'>share this article</span>
         </span>
+        
 
         <div className="flex gap-4">
           {shareblog.map((item) => (

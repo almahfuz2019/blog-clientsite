@@ -7,7 +7,7 @@ const NavbarForMobail = () => {
   <li><NavLink to="/">Home</NavLink></li>
   <li><NavLink to="/authors">Authors</NavLink></li>
   <li><NavLink to="/faq">FAQ</NavLink></li>
-  <li><NavLink to="/deshboard">Deshboard</NavLink></li>
+  <li><NavLink to="/deshboard">Dashboard</NavLink></li>
   <li><NavLink to="/contact">Contact</NavLink></li>
   </>
      return (

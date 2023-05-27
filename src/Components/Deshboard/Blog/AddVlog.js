@@ -9,7 +9,12 @@ import auth from "../../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Loading from "../../Shired/Loading";
 import UseToken from "../../Hooks/UseToken";
+import date from 'date-and-time';
 const AddVlog = () => {
+  const now = new Date();
+ const addblogdate=date.format(now, 'ddd, MMM DD YYYY'); 
+ console.log(addblogdate);
+  console.log(date);
   const { categorys, loadCategorys } = UseCategory();
   const [user, loading, error] = useAuthState(auth);
   const [image, setimage] = useState("");
@@ -36,22 +41,22 @@ const AddVlog = () => {
       })
       .catch((error) => {});
   };
-  let today = new Date();
-  let year = today.getFullYear();
-  let mes = today.getMonth() + 1;
-  let dia = today.getDate();
-  var timewithmenits =
-    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  let data = dia + "/" + mes + "/" + year;
-  let date = data + "," + timewithmenits;
-  console.log(date);
+  // let today = new Date();
+  // let year = today.getFullYear();
+  // let mes = today.getMonth() + 1;
+  // let dia = today.getDate();
+  // var timewithmenits =
+  //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  // let data = dia + "/" + mes + "/" + year;
+  // let date = data + "," + timewithmenits;
+  // console.log(date);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const handleAddProduct = (data) => {
-    const submitData = { ...data, description, image, date };
+    const submitData = { ...data, description, image,addblogdate };
 
     axios
       .post("http://localhost:5000/createblog", { ...submitData })
@@ -110,6 +115,7 @@ const AddVlog = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="blog title"
                   {...register("title", {
                     required: "Title is Required",
                   })}
@@ -148,6 +154,7 @@ const AddVlog = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="keywords"
                   {...register("keywords")}
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                 />
