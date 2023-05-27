@@ -70,6 +70,7 @@ const UpdateProfile = () => {
                     onChange={firstImageUpload}
                   />
               </div>
+              <img className='mx-auto h-20 w-20 border border-primary p-0.5 rounded-md mb-3' src={user?.photoURL}  alt="" />
               <button
               className='btn-primary rounded-md text-white py-1'
         onClick={async () => {
