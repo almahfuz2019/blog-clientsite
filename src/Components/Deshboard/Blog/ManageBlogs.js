@@ -56,7 +56,7 @@ const ManageBlogs = () => {
      return (
           <div>
           <div className="overflow-x-auto">
-          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Blogs: {productsCount.count}</span></div>
+          <div className='text-center my-5'><span className='bg-primary rounded p-2 text-white font-bold text-xl sm:text-3xl '>Total Blogs: {blogs.length}</span></div>
         
      <div className='mx-auto text-center mb-5'>
      <input type="text" placeholder="Search here by product name" className="input input-bordered input-accent w-full sm:max-w-sm input-sm sm:input-md max-w-xs border border-primary" onChange={handleSearch}/>
@@ -95,7 +95,7 @@ const ManageBlogs = () => {
                 <br/>
                 {blog?.dateAndTime}
                 </td>
-                <td>{blog.status}</td>
+                <td><span  className='bg-yellow-700 px-2 py-1 text-white rounded'>{blog.status}</span></td>
                 <td className='flex gap-3 text-2xl'>
                  <Link to={`/updateblog/${blog._id}`}>
                  <FaRegEdit/>

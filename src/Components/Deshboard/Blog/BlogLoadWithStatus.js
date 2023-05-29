@@ -92,7 +92,7 @@ const BlogLoadWithStatus = () => {
                 <br/>
                 {blog?.dateAndTime}
                 </td>
-                <td>{blog.status}</td>
+                <td><span  className='bg-yellow-700 text-white px-2 py-1  rounded'>{blog.status}</span></td>
                 <td className='flex gap-3 text-2xl'>
                  <Link to={`/updateblog/${blog._id}`}>
                  <FaRegEdit/>

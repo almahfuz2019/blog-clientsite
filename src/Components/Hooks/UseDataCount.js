@@ -7,7 +7,7 @@ const UseDataCount = () => {
      const [contactCount,setContactCount]=useState([]);
      const [waitingBlogsCount,setWaitingBlogsCount]=useState([]);
      useEffect(()=>{
-       fetch("http://localhost:5000/blogscount")
+       fetch("http://localhost:5000/blogscountwithavailable")
        .then(res=>res.json())
        .then(data=>setBlogsCount(data))
    },[])

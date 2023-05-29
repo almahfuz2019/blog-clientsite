@@ -16,7 +16,7 @@ const Login = () => {
   );
 
   const actionCodeSettings = {
-    url: 'http://localhost:3000/login',
+    url: 'http://localhost:3000/',
     handleCodeInApp: true,
   };
 
@@ -58,7 +58,7 @@ if (error1) {
   );
 }
 if (sending1) {
-  return <p>Sending...</p>;
+  return <Loading/>
 }
      return (
 <div className=" py-10 bg-white">

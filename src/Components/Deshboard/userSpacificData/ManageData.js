@@ -47,8 +47,38 @@ const ManageData = () => {
               </tr>
             </thead>
          {userData.map((blog,index)=>
+         
             <tbody key={blog._id}>
-              <tr className='border bg-white'>
+             { blog?.status==="Draft" ? <><tr className='border bg-white '>
+                <th>{index+1}</th>
+                <td>
+                <div className="avatar  border-rose-700 rounded border-2">
+                   <div className="mask mask-squircle w-12 h-12 ">
+                     {
+                     blog?.image?
+         <img  src={blog?.image} alt="product image"/>:
+         <img src="" className='bg-rose-700' alt='not found image'/>
+                     }
+                   </div>
+                 </div>
+                </td>
+                <td className=''>{blog?.title.slice(0,25)}</td>
+                <td className=''>{blog?.category} 
+                <br />
+                Author: {blog?.authorName}
+                <br/>
+                {blog?.dateAndTime}
+                </td>
+                <td><span  className='bg-rose-700 px-2 py-1 text-white rounded'>{blog.status}</span></td>
+                <td className='flex gap-3 text-2xl'>
+                 <Link to={`/updateblog/${blog._id}`}>
+                 <FaRegEdit/>
+                 </Link>
+                 {/* <Link onClick={()=>handleProductDelete(blog._id)}>
+                 <FaRegTrashAlt/>
+                 </Link> */}
+                </td>
+              </tr></>:blog?.status==="waiting" ?<><tr className='border bg-white'>
                 <th>{index+1}</th>
                 <td>
                 <div className="avatar  border-primary rounded border-2">
@@ -68,7 +98,7 @@ const ManageData = () => {
                 <br/>
                 {blog?.dateAndTime}
                 </td>
-                <td>{blog.status}</td>
+                <td><span  className='bg-yellow-700 px-2 py-1 text-white rounded'>{blog.status}</span></td>
                 <td className='flex gap-3 text-2xl'>
                  <Link to={`/updateblog/${blog._id}`}>
                  <FaRegEdit/>
@@ -77,7 +107,36 @@ const ManageData = () => {
                  <FaRegTrashAlt/>
                  </Link> */}
                 </td>
-              </tr>
+              </tr></>:<><tr className='border bg-white'>
+                <th>{index+1}</th>
+                <td>
+                <div className="avatar  border-primary rounded border-2">
+                   <div className="mask mask-squircle w-12 h-12 ">
+                     {
+                     blog?.image?
+         <img  src={blog?.image} alt="product image"/>:
+         <img src="" className='bg-primary' alt='not found image'/>
+                     }
+                   </div>
+                 </div>
+                </td>
+                <td>{blog?.title.slice(0,25)}</td>
+                <td>{blog?.category} 
+                <br />
+                Author: {blog?.authorName}
+                <br/>
+                {blog?.dateAndTime}
+                </td>
+                <td><span  className='bg-green-700 px-2 py-1 text-white rounded'>{blog.status}</span></td>
+                <td className='flex gap-3 text-2xl'>
+                 <Link to={`/updateblog/${blog._id}`}>
+                 <FaRegEdit/>
+                 </Link>
+                 {/* <Link onClick={()=>handleProductDelete(blog._id)}>
+                 <FaRegTrashAlt/>
+                 </Link> */}
+                </td>
+              </tr></>} 
             </tbody>
           )}
           </table>

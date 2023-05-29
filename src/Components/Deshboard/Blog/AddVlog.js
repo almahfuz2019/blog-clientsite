@@ -199,6 +199,7 @@ const AddVlog = () => {
                   className="select w-full  border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 rounded"
                 >
                   <option value="waiting">Waiting </option>
+                  <option value="Draft">Draft</option>
                   {authUser?.role ==="Admin"&&
                   <option value="Available">Available</option>}
                 </select>

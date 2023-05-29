@@ -69,7 +69,8 @@ const AllAuthors = () => {
                 {blog?.email} 
                 </td>
                 <td>
-                {blog?.role} 
+                  {blog?.role==="	Author"?<span className='bg-yello-700 px-2 py-1 rounded'> {blog?.role} </span>:<span> {blog?.role} </span>}
+               
                 </td>
                 <td className='flex gap-3 text-2xl'>
                  <Link to={`/updaterole/${blog._id}`}>
