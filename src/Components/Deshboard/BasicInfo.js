@@ -80,7 +80,7 @@ if (hours < 12) {
                   Available Blogs
                   </dt>
         
-                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{blogsCount.count-waitingBlogsCount.count}</dd>
+                  <dd className="text-4xl font-extrabold text-primary md:text-5xl">{blogsCount.count}</dd>
                   
                 </div>
                 <div

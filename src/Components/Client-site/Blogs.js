@@ -160,7 +160,7 @@ const Blogs = () => {
         </>
       </div>
       {blogs.length === 0 ||
-      blogs.length === blogsCount.count - waitingBlogsCount.count ? (
+      blogs.length === blogsCount.count? (
         ""
       ) : (
         <div className="mx-auto text-center mt-5">

@@ -1,17 +1,19 @@
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
-import { useAuthState, useUpdatePassword, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { useAuthState, useSendPasswordResetEmail,  useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import Loading from '../../Shired/Loading';
 import { toast } from 'react-toastify';
 const UpdateProfile = () => {
      const [user, loading, error] = useAuthState(auth);
-     const [password, setPassword] = useState('');
+     const [email, setEmail] = useState(user?.email);
      const [displayName, setDisplayName] = useState(user?.displayName);
      const [photoURL, setPhotoURL] = useState(user?.photoURL);
-     const [updateProfile, updating, profileerror] = useUpdateProfile(auth); 
-     const [updatePassword, passwordupdating, passeorderror] = useUpdatePassword(auth);
+     const [updateProfile, updating, profileerror] = useUpdateProfile(auth);
+     const [sendPasswordResetEmail, sending, error1] = useSendPasswordResetEmail(
+      auth
+    );
   const imageHostKey = "887fe618a11124584e3e5d5893d310bc";
   const firstImageUpload = (event) => {
     const imageurl = event.target.files[0];
@@ -28,16 +30,33 @@ const UpdateProfile = () => {
       })
       .catch((error) => {});
   };
-  if (error || profileerror ||passeorderror) {
+  if (profileerror) {
+     return (
+       <div>
+         <p>Error: {profileerror?.message}</p>
+       </div>
+     );
+   }
+  if (error ) {
      return (
        <div>
          <p>Error: {error?.message}</p>
        </div>
      );
    }
-  if (updating || loading || passwordupdating) {
+  if (error1) {
+     return (
+       <div>
+         <p>Error: {error1?.message}</p>
+       </div>
+     );
+   }
+  if (updating || loading || sending) {
      return <Loading/>;
    }
+   const actionCodeSettings = {
+    url: 'http://localhost:3000/login',
+  };
      return (
           <div>
             <section className="text-gray-600 body-font relative ">
@@ -97,32 +116,32 @@ const UpdateProfile = () => {
                   Update password
                 </label>
                 <input
-            type="password"
-            value={password}
-            placeholder='enter your new password'
-            onChange={(e) => setPassword(e.target.value)}
+            type="email"
+            value={user?.email}
                   className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
-                <button
-                className='btn-primary rounded-md text-white py-1 w-full mt-3'
+                <button  className='btn-primary rounded-md text-white py-1 w-full mt-3'
         onClick={async () => {
-          const success = await updatePassword(password);
+          const success = await sendPasswordResetEmail(
+            email,actionCodeSettings
+          );
           if (success) {
-               toast.success("Updated successfully", {
-                    position: "top-right",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: false,
-                    progress: undefined,
-                    theme: "colored",
-                  });
+            toast.success("Check your email", {
+              position: "top-right",
+              autoClose: 1000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: false,
+              progress: undefined,
+              theme: "colored",
+            });
           }
         }}
       >
-        Update password
+        Reset password
       </button>
+               
               </div>
               
               
