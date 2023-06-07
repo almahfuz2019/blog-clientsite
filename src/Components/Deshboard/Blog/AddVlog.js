@@ -57,7 +57,6 @@ const AddVlog = () => {
   } = useForm();
   const handleAddProduct = (data) => {
     const submitData = { ...data, description, image,addblogdate };
-
     axios
       .post("http://localhost:5000/createblog", { ...submitData })
       .then((response) => {

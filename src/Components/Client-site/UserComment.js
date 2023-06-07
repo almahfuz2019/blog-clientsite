@@ -1,9 +1,14 @@
 import axios from 'axios';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from "react-hook-form";
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import auth from '../../firebase.init';
 const UserComment = () => {
+     const [user, loading, error] = useAuthState(auth);
+
+
      const {id}=useParams();
      console.log(id);
      const postID=id;
@@ -58,7 +63,7 @@ const UserComment = () => {
 {errors.userComment && <span>This field is required</span>}
 </div>
 <div>
-<button type="submit" className="w-full px-4 py-2 font-bold rounded shadow focus:outline-none focus:ring hover:ring focus:ring-opacity-50 bg-primary focus:ring-primary hover:ring-primary text-gray-100">Send</button>
+    <button  type="submit" className="w-full  px-4 py-2 font-bold rounded shadow focus:outline-none focus:ring hover:ring focus:ring-opacity-50 bg-primary focus:ring-primary hover:ring-primary text-gray-100">Send</button>
 </div>
 </form>
 </section> 

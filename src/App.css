@@ -45,6 +45,10 @@ body{
 .active{
   background:none !important;
   font-weight: 700;
-  color: #1e40af;
+  color: #025854;
 
+}
+.heading{
+
+font-family: 'Rowdies', cursive;
 }

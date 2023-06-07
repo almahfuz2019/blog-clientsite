@@ -8,13 +8,13 @@ const LoadAllCategorys = () => {
     loadCategorys();
    },[categorys])
      return (
-          <div className='sticky top-0  w-60 hidden md:block'>
-     <div className='border-2 border-primary p-3 m-5 font-bold rounded-md  '>
+          <div className='sticky top-0  w-80 hidden md:block '>
+     <div className='border-2  p-3 mx-5 font-bold rounded-md  '>
   <h1 className='text-xl border-b-4 border-primary pb-1'>Categories</h1>
  {
      categorys.map(category=>
-          <div className='mt-3 flex justify-between' key={category._id}>
- <Link to={`/blogs/${category.name}`} className='hover:underline underline-offset-4'>#{category.name}</Link>
+          <div className='mt-3 flex justify-between w-full' key={category._id}>
+ <Link to={`/blogs/${category.name}`} className='hover:underline underline-offset-4 w-full'>#{category.name}</Link>
  </div>
           )
  }
